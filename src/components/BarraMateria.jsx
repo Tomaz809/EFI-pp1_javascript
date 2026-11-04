@@ -6,7 +6,7 @@ const ESTILOS = {
   con_correlativa: "bg-sitec-amarillo text-zinc-900",
 }
 
-export default function BarraMateria({ materia, estado = "libre", mensaje, onToggle, textoBoton }) {
+export default function BarraMateria({ materia, estado = "libre", mensaje, aviso, onToggle, textoBoton }) {
   const inscripta = estado !== "libre"
 
   return (
@@ -26,6 +26,11 @@ export default function BarraMateria({ materia, estado = "libre", mensaje, onTog
         </button>
       </div>
 
+      {inscripta && aviso && (
+        <p role="alert" className="text-[13px] text-sitec-rojo font-bold pl-8 pt-1.5">
+          ⚠ {aviso}
+        </p>
+      )}
       {inscripta && mensaje && <p className="text-[13px] text-zinc-700 pl-8 pt-1.5 pb-1">{mensaje}</p>}
     </li>
   )

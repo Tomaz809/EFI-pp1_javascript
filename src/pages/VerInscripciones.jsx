@@ -9,7 +9,7 @@ import { estadoInscripcion } from "../utils/mensajes"
 // Subruta /inscripciones/ver: materias a las que el alumno se inscribió
 export default function VerInscripciones() {
   const { materias, grafo } = useOutletContext()
-  const { cursada, toggleCursada, limpiarCursada } = useContext(PlanContext)
+  const { cursada, toggleCursada, limpiarCursada, condiciones } = useContext(PlanContext)
 
   const inscriptas = materias
     .filter((m) => cursada.includes(m.id))
@@ -36,13 +36,14 @@ export default function VerInscripciones() {
         ) : (
           <ul className="flex flex-col gap-4 max-w-xl">
             {inscriptas.map((materia) => {
-              const { estado, mensaje } = estadoInscripcion(materia, materias, grafo)
+              const { estado, mensaje, aviso } = estadoInscripcion(materia, materias, grafo, condiciones)
               return (
                 <BarraMateria
                   key={materia.id}
                   materia={materia}
                   estado={estado}
                   mensaje={mensaje}
+                  aviso={aviso}
                   onToggle={toggleCursada}
                   textoBoton="Dar de baja"
                 />
