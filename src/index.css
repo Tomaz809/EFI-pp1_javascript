@@ -1,28 +1,31 @@
 @import "tailwindcss";
 
-/* Paleta y tipografía basadas en el SITEC del ITEC Río Cuarto */
+/* Paleta y tipografía del SITEC (ITEC Río Cuarto) */
 @theme {
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
-  /* Bordó institucional (ítem activo del menú, botones principales) */
-  --color-itec-50: #fbf3f3;
-  --color-itec-100: #f5e1e1;
-  --color-itec-200: #e9bcbc;
-  --color-itec-500: #a33434;
-  --color-itec-600: #8b2525;
-  --color-itec-700: #741c1c;
-  --color-itec-800: #5e1717;
+  /* Barra superior y menú lateral */
+  --color-sitec-top: #333333;
+  --color-sitec-side: #2b2b2b;
+  --color-sitec-item: #343a40;
+  --color-sitec-sub: #3b4046;
+  --color-sitec-line: #23272b;
+  --color-sitec-text: #d6d6d6;
 
-  /* Grises del menú lateral y la barra superior */
-  --color-sitec-top: #2b2e33;
-  --color-sitec-side: #343a40;
-  --color-sitec-side-2: #2c3136;
-  --color-sitec-line: #454c53;
-  --color-sitec-text: #c2c7d0;
-  --color-sitec-bg: #f4f6f9;
+  /* Bordó del ítem activo */
+  --color-sitec-rojo: #7b1e1e;
+  --color-sitec-rojo-2: #962626;
+
+  /* Barras de materias y estados */
+  --color-sitec-barra: #343a40;
+  --color-sitec-gris: #7d7f82;
+  --color-sitec-amarillo: #e0b014;
+
+  /* Fondo del contenido */
+  --color-sitec-bg: #f5f5f5;
 }
 
 body {
   background-color: var(--color-sitec-bg);
+  font-size: 14px;
 }
