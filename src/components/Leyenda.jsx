@@ -1,20 +1,27 @@
 const ITEMS = [
-  { color: "bg-blue-500", texto: "Materia enfocada" },
-  { color: "bg-amber-500", texto: "Correlativa previa (hay que aprobarla antes)" },
-  { color: "bg-emerald-500", texto: "Materia que destraba" },
-  { color: "bg-violet-500", texto: "Favorita / objetivo" },
-  { color: "bg-rose-600", texto: "Cuello de botella de tu cursada" },
+  { clase: "bg-sky-50 text-sky-700 border-sky-300", texto: "◎ Enfocada" },
+  { clase: "bg-amber-100 text-amber-800 border-amber-300", texto: "Previa" },
+  { clase: "bg-emerald-100 text-emerald-800 border-emerald-300", texto: "Destraba" },
+  { clase: "bg-violet-50 text-violet-700 border-violet-300", texto: "★ Favorita" },
+  { clase: "bg-itec-50 text-itec-700 border-itec-200", texto: "Cursar sí o sí" },
 ]
 
+// Recuadro informativo con el régimen y los colores, como el aviso de SITEC
 export default function Leyenda() {
   return (
-    <ul className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-zinc-400">
-      {ITEMS.map((item) => (
-        <li key={item.texto} className="flex items-center gap-2">
-          <span className={`w-3 h-3 rounded-full ${item.color}`} />
-          {item.texto}
-        </li>
-      ))}
-    </ul>
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 bg-white border border-zinc-200 rounded-lg px-4 py-3 text-xs text-zinc-600">
+      <p className="flex-1 min-w-64">
+        <span className="text-itec-700 font-bold">ⓘ Régimen Académico ITeC:</span> para{" "}
+        <strong>rendir</strong> una materia hay que tener <em>aprobadas</em> sus correlativas.
+        Tildá <strong className="text-sky-700">Enfocar</strong> en una materia para ver su cadena.
+      </p>
+      <ul className="flex flex-wrap gap-2">
+        {ITEMS.map((item) => (
+          <li key={item.texto} className={`border px-2 py-0.5 rounded-full font-semibold ${item.clase}`}>
+            {item.texto}
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }

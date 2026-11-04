@@ -2,12 +2,12 @@
 export default function CampoForm({ label, error, children }) {
   return (
     <div className="mt-4">
-      <label className="block text-sm mb-1 text-zinc-300">{label}</label>
+      <label className="block text-sm mb-1 font-semibold text-zinc-700">{label}</label>
       {children}
-      {error && <p className="text-sm text-red-400 mt-1 animate-pulse">{error}</p>}
+      {error && <p className="text-sm text-red-600 mt-1">{error}</p>}
     </div>
   )
 }
 
 export const inputStyle =
-  "w-full px-3 py-2 rounded bg-zinc-900 border border-zinc-700 focus:border-blue-500 outline-none"
+  "w-full px-3 py-2 rounded bg-white border border-zinc-300 focus:border-itec-600 focus:ring-2 focus:ring-itec-100 outline-none"
