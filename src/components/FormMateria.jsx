@@ -74,7 +74,7 @@ export default function FormMateria({ materias, carreras, onCreada }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="bg-zinc-800 p-6 rounded-lg">
+    <form onSubmit={handleSubmit} noValidate className="bg-white border border-zinc-200 p-6 rounded-lg">
       <h2 className="text-xl font-bold">Nueva materia</h2>
 
       <CampoForm label="Nombre" error={errors.nombre_materia}>
@@ -131,7 +131,7 @@ export default function FormMateria({ materias, carreras, onCreada }) {
       )}
 
       {mensaje && (
-        <p className={`mt-4 text-sm ${mensaje.tipo === "ok" ? "text-emerald-400" : "text-red-400"}`}>
+        <p className={`mt-4 text-sm ${mensaje.tipo === "ok" ? "text-emerald-700" : "text-red-600"}`}>
           {mensaje.texto}
         </p>
       )}
@@ -139,7 +139,7 @@ export default function FormMateria({ materias, carreras, onCreada }) {
       <button
         type="submit"
         disabled={enviando}
-        className="bg-blue-600 hover:bg-blue-500 w-full mt-6 rounded-lg py-3 cursor-pointer disabled:opacity-50"
+        className="bg-itec-700 hover:bg-itec-600 text-white font-semibold w-full mt-6 rounded-lg py-3 cursor-pointer disabled:opacity-50"
       >
         {enviando ? "Guardando..." : "Guardar materia"}
       </button>

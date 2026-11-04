@@ -1,3 +1,4 @@
+import PageHeader from "../components/PageHeader"
 import { useEffect, useState } from "react"
 import ErrorMessage from "../components/ErrorMessage"
 import FormCorrelativa from "../components/FormCorrelativa"
@@ -21,11 +22,11 @@ export default function AgregarMateria() {
   if (error) return <ErrorMessage mensaje={error} onReintentar={recargar} />
 
   return (
-    <main className="max-w-5xl mx-auto w-full pt-6 px-4">
-      <h1 className="text-3xl font-bold">Cargar plan de estudios</h1>
-      <p className="text-zinc-400 text-sm mt-1 mb-6">
-        Agregá materias y sus correlativas. Se guardan en la API.
-      </p>
+    <main>
+      <PageHeader
+        titulo="Cargar plan de estudios"
+        subtitulo="Agregá materias y sus correlativas. Se guardan en la API."
+      />
 
       <div className="grid md:grid-cols-2 gap-6 items-start">
         <FormMateria materias={materias} carreras={carreras} onCreada={recargar} />

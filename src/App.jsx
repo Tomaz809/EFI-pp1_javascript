@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Footer from './components/Footer'
-import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
+import Topbar from './components/Topbar'
 import { PlanProvider } from './context/PlanContext'
 import AgregarMateria from './pages/AgregarMateria'
 import CorrelativasPrevias from './pages/CorrelativasPrevias'
@@ -15,36 +17,46 @@ import PlanAnio from './pages/PlanAnio'
 import PlanCompleto from './pages/PlanCompleto'
 
 function App() {
+  // Menú lateral desplegable en celulares
+  const [menuAbierto, setMenuAbierto] = useState(false)
+
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-zinc-900 text-zinc-100">
-      <PlanProvider>
-        <Navbar />
+    <PlanProvider>
+      <div className="min-h-screen bg-sitec-bg text-zinc-800">
+        <Topbar onToggleMenu={() => setMenuAbierto((v) => !v)} />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <div className="flex">
+          <Sidebar abierto={menuAbierto} onCerrar={() => setMenuAbierto(false)} />
 
-          {/* Ruta con subrutas anidadas: plan completo y filtro por año */}
-          <Route path="/materias" element={<Materias />}>
-            <Route index element={<PlanCompleto />} />
-            <Route path="anio/:anio" element={<PlanAnio />} />
-          </Route>
+          <div className="flex-1 min-w-0 flex flex-col min-h-[calc(100vh-3rem)]">
+            <div className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-8 py-8">
+              <Routes>
+                <Route path="/" element={<Home />} />
 
-          {/* Ruta dinámica con subrutas: previas y lo que destraba */}
-          <Route path="/materia/:id" element={<MateriaDetalle />}>
-            <Route index element={<CorrelativasPrevias />} />
-            <Route path="destraba" element={<MateriasQueDestraba />} />
-          </Route>
+                {/* Ruta con subrutas anidadas: plan completo y filtro por año */}
+                <Route path="/materias" element={<Materias />}>
+                  <Route index element={<PlanCompleto />} />
+                  <Route path="anio/:anio" element={<PlanAnio />} />
+                </Route>
 
-          <Route path="/favoritos" element={<Favoritos />} />
-          <Route path="/cursada" element={<Cursada />} />
-          <Route path="/agregar" element={<AgregarMateria />} />
+                {/* Ruta dinámica con subrutas: previas y lo que destraba */}
+                <Route path="/materia/:id" element={<MateriaDetalle />}>
+                  <Route index element={<CorrelativasPrevias />} />
+                  <Route path="destraba" element={<MateriasQueDestraba />} />
+                </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+                <Route path="/favoritos" element={<Favoritos />} />
+                <Route path="/cursada" element={<Cursada />} />
+                <Route path="/agregar" element={<AgregarMateria />} />
 
-        <Footer />
-      </PlanProvider>
-    </div>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+            <Footer />
+          </div>
+        </div>
+      </div>
+    </PlanProvider>
   )
 }
 
