@@ -29,6 +29,7 @@ Endpoints usados:
 - **Inscripciones Para Cursar:** se listan las materias del año que cursa el alumno y las del año siguiente. Al tocar el círculo de una materia el alumno se inscribe:
   - si la materia **es correlativa** de otras, la barra se pone **amarilla** con el mensaje "Cuenta con correlativa" y las materias que destraba;
   - si **no es correlativa** de ninguna, se pone **gris** con el aviso "OJO! Si no tenés tiempo para cursar todo el año, priorizá otra materia con correlativa".
+- **Aviso de correlativas sin aprobar:** al inscribirse a una materia, si alguna de sus correlativas no figura como *Aprobada* en la condición simulada, aparece el aviso "Atención: para cursar X tenés que aprobar antes Y" (deja inscribirse igual).
 - **Ver Inscripciones:** materias inscriptas, con opción de darse de baja.
 - **Condición (Estado de Cursada):** cada materia inscripta tiene un botón de **simulación** que cambia la condición (Sin nota → Aprobada → Desaprobada) como si el docente cargara la nota, y una ★ para marcarla como favorita.
 - **Favoritos:** el botón de la barra superior abre un panel en la misma página con cada materia favorita y sus correlativas.
