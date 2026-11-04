@@ -85,7 +85,7 @@ VITE_API_URL=http://127.0.0.1:8000
 
 ## Organización
 
-- Tablero Kanban: _(link al tablero)_
+- Tablero Kanban: (https://equipo-9z-retools.atlassian.net/jira/software/projects/JS/boards/35?filter=&groupBy=none)
 - GitFlow: `main` (producción), `develop` (integración) y ramas `feature/*` por funcionalidad.
 
 ## Integrantes
