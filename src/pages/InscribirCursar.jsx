@@ -9,7 +9,7 @@ import { estadoInscripcion } from "../utils/mensajes"
 // Subruta /inscripciones/cursar
 export default function InscribirCursar() {
   const { materias, grafo } = useOutletContext()
-  const { cursada, toggleCursada, anioActual, setAnioActual } = useContext(PlanContext)
+  const { cursada, toggleCursada, anioActual, setAnioActual, condiciones } = useContext(PlanContext)
 
   const anios = [...new Set(materias.map((m) => m.anio))].sort((a, b) => a - b)
   const anioSiguiente = anios.includes(anioActual + 1) ? anioActual + 1 : null
@@ -22,13 +22,14 @@ export default function InscribirCursar() {
 
   const renderBarra = (materia) => {
     const inscripta = cursada.includes(materia.id)
-    const { estado, mensaje } = estadoInscripcion(materia, materias, grafo)
+    const { estado, mensaje, aviso } = estadoInscripcion(materia, materias, grafo, condiciones)
     return (
       <BarraMateria
         key={materia.id}
         materia={materia}
         estado={inscripta ? estado : "libre"}
         mensaje={mensaje}
+        aviso={aviso}
         onToggle={toggleCursada}
         textoBoton={inscripta ? "Cancelar inscripción" : "Inscribirse"}
       />
