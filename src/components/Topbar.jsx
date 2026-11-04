@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 
+const TITULO_MUESTRA = "Solo muestra del SITEC: no forma parte de este módulo"
+
 // Barra superior oscura como la del SITEC
 export default function Topbar({ onToggleMenu }) {
   return (
@@ -17,14 +19,18 @@ export default function Topbar({ onToggleMenu }) {
             📊
           </span>
           <span className="text-lg font-bold tracking-wide">SITEC</span>
+          <span className="hidden sm:inline text-[10px] font-bold uppercase bg-itec-700 px-2 py-0.5 rounded">
+            Prototipo
+          </span>
         </Link>
       </div>
 
-      <div className="flex items-center gap-2 text-sm">
-        <span className="hidden sm:flex items-center gap-1 bg-sky-700 px-3 py-1.5 rounded">
+      {/* Botones de la cuenta: solo de muestra */}
+      <div className="flex items-center gap-2 text-sm opacity-60" title={TITULO_MUESTRA}>
+        <span className="hidden sm:flex items-center gap-1 bg-sky-700 px-3 py-1.5 rounded cursor-not-allowed">
           👤 Mi Usuario
         </span>
-        <span className="flex items-center gap-1 border border-amber-500 text-amber-400 px-3 py-1.5 rounded">
+        <span className="flex items-center gap-1 border border-amber-500 text-amber-400 px-3 py-1.5 rounded cursor-not-allowed">
           ⏻ Salir
         </span>
       </div>
