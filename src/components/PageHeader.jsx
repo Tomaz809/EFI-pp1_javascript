@@ -1,20 +1,14 @@
-// Encabezado de cada vista, con el formato del módulo de SITEC
-export default function PageHeader({ titulo, subtitulo, nuevo = false, children }) {
+// Encabezado de cada vista, como los títulos del SITEC
+export default function PageHeader({ titulo, subtitulo, children }) {
   return (
-    <div className="flex flex-wrap items-start justify-between gap-4 pb-5 mb-6 border-b border-zinc-200">
-      <div>
-        <div className="flex items-center gap-2 text-xs text-zinc-500 mb-1">
-          {nuevo && (
-            <span className="bg-itec-700 text-white font-bold px-2 py-0.5 rounded uppercase text-[10px]">
-              Nuevo módulo
-            </span>
-          )}
-          SITEC · Gestión Académica
-        </div>
-        <h1 className="text-3xl font-light text-zinc-800">{titulo}</h1>
-        {subtitulo && <p className="text-sm text-zinc-500 mt-1">{subtitulo}</p>}
+    <div className="mb-5">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <h1 className="text-2xl text-zinc-800">{titulo}</h1>
+        {children}
       </div>
-      {children}
+      {subtitulo && (
+        <p className="text-[17px] text-zinc-700 mt-4 pb-2 border-b border-zinc-300">{subtitulo}</p>
+      )}
     </div>
   )
 }

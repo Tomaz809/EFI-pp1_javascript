@@ -1,13 +1,13 @@
-// Contenedor de un campo de formulario: label + mensaje de error + input
+// Contenedor de un campo de formulario: label + input + mensaje de error
 export default function CampoForm({ label, error, children }) {
   return (
     <div className="mt-4">
-      <label className="block text-sm mb-1 font-semibold text-zinc-700">{label}</label>
+      <label className="block text-[13px] mb-1 text-zinc-700">{label}</label>
       {children}
-      {error && <p className="text-sm text-red-600 mt-1">{error}</p>}
+      {error && <p className="text-xs text-red-700 mt-1">{error}</p>}
     </div>
   )
 }
 
 export const inputStyle =
-  "w-full px-3 py-2 rounded bg-white border border-zinc-300 focus:border-itec-600 focus:ring-2 focus:ring-itec-100 outline-none"
+  "w-full px-2 py-1.5 bg-white border border-zinc-300 outline-none focus:border-zinc-500"

@@ -1,10 +1,10 @@
-# SITEC · Módulo Plan de Estudio y Correlativas
+# SITEC · Inscripciones y Correlativas
 
-Aplicación web en React para que los estudiantes del ITEC Río Cuarto vean el plan de estudios completo de la Tecnicatura Superior en Desarrollo de Software (1.° a 3.° año) y gestionen su avance de forma visual: qué correlativas necesita cada materia, qué materias destraba y cuáles conviene cursar si no se puede cursar todo.
+Aplicación web en React para que los estudiantes del ITEC Río Cuarto se inscriban a cursar, sigan la condición de sus materias y consulten el plan de estudios de la Tecnicatura Superior en Desarrollo de Software (1.° a 3.° año) con su régimen de correlatividades.
 
-Está diseñada como un **prototipo de módulo nuevo para el SITEC**: reproduce su estética (barra superior, menú lateral, paleta bordó/gris y tipografía) para mostrar cómo se integraría dentro del sistema actual.
+Está diseñada como un **prototipo de módulo para el SITEC**: reproduce su estética (barra superior, menú lateral, colores y tipografía) para mostrar cómo se integraría en el sistema actual.
 
-> **Alcance:** solo la sección **Estado Cursada** (Inicio del módulo, Seguimiento de cursada, Plan de Estudio, Materias favoritas y Cargar plan) es funcional. El resto del menú (Mis Datos, Inscripciones, Llamado a Examen, Institucional, Ayuda, Descarga de Archivos) y los botones Mi Usuario / Salir son **solo una muestra visual** del SITEC y aparecen marcados como tales.
+> **Alcance:** son funcionales **Inscripciones → Cursar / Ver Inscripciones**, **Estado Cursada → Condición / Plan de Estudio / Cargar plan** y el botón **favoritos**. El resto (Mis Datos, Rendir, Llamado a Examen, Institucional, Ayuda, Descarga de Archivos, Mi Usuario y Salir) es **solo una muestra visual** del SITEC: aparece atenuado y no se puede usar.
 
 ## Temática y API
 
@@ -26,35 +26,39 @@ Endpoints usados:
 
 ## Funcionalidades
 
-- **Modo Enfoque:** al tildar una materia se apagan las demás y quedan resaltadas sus correlativas previas (amarillo) y las materias que destraba (verde).
-- **Buscador y filtro por año:** en el plan de estudio se puede filtrar por año (ruta anidada) y buscar por nombre o código.
-- **Materias favoritas:** se marcan con ★ y se destacan en violeta en toda la app (Context API). En `/favoritos` se ve además el camino de previas necesario para llegar a ellas.
-- **Asistente de cursada:** el alumno marca las materias que va a cursar este cuatrimestre y la app indica cuál cursar **sí o sí** (cuello de botella: la que más materias destraba de su año) y cuáles son **postergables** (no son correlativas de ninguna).
-- **ABM:** alta de materias y correlativas con formularios controlados y validados, y baja de materias y correlativas.
+- **Inscripciones Para Cursar:** se listan las materias del año que cursa el alumno y las del año siguiente. Al tocar el círculo de una materia el alumno se inscribe:
+  - si la materia **es correlativa** de otras, la barra se pone **amarilla** con el mensaje "Cuenta con correlativa" y las materias que destraba;
+  - si **no es correlativa** de ninguna, se pone **gris** con el aviso "OJO! Si no tenés tiempo para cursar todo el año, priorizá otra materia con correlativa".
+- **Ver Inscripciones:** materias inscriptas, con opción de darse de baja.
+- **Condición (Estado de Cursada):** cada materia inscripta tiene un botón de **simulación** que cambia la condición (Sin nota → Aprobada → Desaprobada) como si el docente cargara la nota, y una ★ para marcarla como favorita.
+- **Favoritos:** el botón de la barra superior abre un panel en la misma página con cada materia favorita y sus correlativas.
+- **Plan de Estudio:** todas las materias por año (con filtro por año como ruta anidada y buscador). Al tildar "Ver correlativas" se resaltan en amarillo las previas y en gris las que destraba.
+- **Detalle de materia** (`/materia/:id`): correlativas directas e indirectas y qué materias destraba; permite quitar correlativas y eliminar la materia.
+- **Cargar plan:** alta de materias y correlativas con formularios controlados y validados.
 
 ## Requisitos cubiertos
 
 | Requisito | Implementación |
 |---|---|
-| Rutas base | `/`, `/materias`, `/favoritos`, `/cursada`, `/agregar` |
+| Rutas base | `/`, `/inscripciones`, `/estado-cursada`, `/materias`, `/agregar` |
 | Ruta dinámica | `/materia/:id` |
-| Rutas anidadas | `/materias/anio/:anio` dentro de `/materias` y `/materia/:id/destraba` dentro de `/materia/:id` (con `<Outlet />`) |
+| Rutas anidadas | `/inscripciones/cursar` y `/inscripciones/ver`; `/materias/anio/:anio`; `/materia/:id/destraba` (con `<Outlet />`) |
 | useState / useEffect | `hooks/usePlanEstudios.js` (datos, `loading`, `error`) y `pages/MateriaDetalle.jsx` (se vuelve a pedir al cambiar el `id`) |
 | Formularios validados | `components/FormMateria.jsx` y `components/FormCorrelativa.jsx` (obligatorios, formato, longitud, rangos, duplicados) |
-| Context API | `context/PlanContext.jsx`: favoritas, cursada y materia enfocada (persistidas en `localStorage`) |
-| Estilos | Tailwind CSS v4 con paleta propia del SITEC (`@theme` en `src/index.css`) |
+| Context API | `context/PlanContext.jsx`: favoritas, inscripciones, condiciones simuladas, año que cursa, modo enfoque y panel de favoritos (persistidos en `localStorage`) |
+| Estilos | Tailwind CSS v4 con la paleta del SITEC (`@theme` en `src/index.css`) |
 | Deploy | Vercel con la variable de entorno `VITE_API_URL` y `vercel.json` para las rutas |
 
 ## Estructura
 
 ```
 src/
-├── components/   # Topbar, Sidebar (estilo SITEC), MateriaCard, PlanGrid, formularios, etc.
+├── components/   # Topbar, Sidebar, BarraMateria, FavoritosModal, MateriaCard, formularios, etc.
 ├── context/      # PlanContext (estado global)
 ├── hooks/        # usePlanEstudios (consumo de la API)
 ├── pages/        # Vistas de cada ruta
 ├── services/     # api.js (todas las peticiones fetch)
-└── utils/        # correlativas.js (grafo, previas, destraba, asistente)
+└── utils/        # correlativas.js (grafo, previas, destraba) y mensajes.js (avisos de inscripción)
 ```
 
 ## Ejecutar localmente
