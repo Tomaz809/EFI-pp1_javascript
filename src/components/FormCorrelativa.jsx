@@ -70,8 +70,8 @@ export default function FormCorrelativa({ materias, correlativas, onCreada }) {
   const ordenadas = [...materias].sort((a, b) => a.anio - b.anio || a.nombre_materia.localeCompare(b.nombre_materia))
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="bg-white border border-zinc-200 p-6 rounded-lg">
-      <h2 className="text-xl font-bold">Nueva correlativa</h2>
+    <form onSubmit={handleSubmit} noValidate className="bg-white border border-zinc-200 p-6 ">
+      <h2 className="text-lg text-zinc-800">Nueva correlativa</h2>
       <p className="text-sm text-zinc-500 mt-1">Para cursar la materia hay que tener aprobada la correlativa.</p>
 
       <CampoForm label="Materia" error={errors.materia_id}>
@@ -93,7 +93,7 @@ export default function FormCorrelativa({ materias, correlativas, onCreada }) {
       </CampoForm>
 
       {mensaje && (
-        <p className={`mt-4 text-sm ${mensaje.tipo === "ok" ? "text-emerald-700" : "text-red-600"}`}>
+        <p className={`mt-4 text-sm ${mensaje.tipo === "ok" ? "text-zinc-800 font-semibold" : "text-red-600"}`}>
           {mensaje.texto}
         </p>
       )}
@@ -101,7 +101,7 @@ export default function FormCorrelativa({ materias, correlativas, onCreada }) {
       <button
         type="submit"
         disabled={enviando || materias.length < 2}
-        className="bg-itec-700 hover:bg-itec-600 text-white font-semibold w-full mt-6 rounded-lg py-3 cursor-pointer disabled:opacity-50"
+        className="bg-sitec-rojo hover:bg-sitec-rojo-2 text-white font-semibold w-full mt-6 py-3 cursor-pointer disabled:opacity-50"
       >
         {enviando ? "Guardando..." : "Guardar correlativa"}
       </button>

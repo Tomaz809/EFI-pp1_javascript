@@ -2,23 +2,28 @@ import { createContext, useEffect, useState } from "react"
 
 // Estado global del alumno:
 //  - favoritas: materias prioritarias / objetivos
-//  - cursada: materias que piensa cursar este cuatrimestre
-//  - enfocada: materia seleccionada en "Modo Enfoque"
+//  - cursada: materias en las que se inscribió para cursar este cuatrimestre
+//  - condiciones: condición simulada de cada materia (sin nota / aprobada / desaprobada)
+//  - enfocada: materia seleccionada en "Modo Enfoque" del plan de estudio
+//  - favoritosAbierto: si el panel de favoritos está visible
 // eslint-disable-next-line react-refresh/only-export-components
 export const PlanContext = createContext()
 
-function cargarLista(clave) {
+// Orden en que cambia la condición al tocar el botón de simulación
+const CONDICIONES = ["sin_nota", "aprobada", "desaprobada"]
+
+function cargar(clave, inicial) {
   try {
     const guardado = localStorage.getItem(clave)
-    return guardado ? JSON.parse(guardado) : []
+    return guardado ? JSON.parse(guardado) : inicial
   } catch {
-    return []
+    return inicial
   }
 }
 
-function guardarLista(clave, lista) {
+function guardar(clave, valor) {
   try {
-    localStorage.setItem(clave, JSON.stringify(lista))
+    localStorage.setItem(clave, JSON.stringify(valor))
   } catch {
     // storage lleno o bloqueado
   }
@@ -29,16 +34,29 @@ const alternar = (lista, id) =>
   lista.includes(id) ? lista.filter((x) => x !== id) : [...lista, id]
 
 export function PlanProvider({ children }) {
-  const [favoritas, setFavoritas] = useState(() => cargarLista("favoritas"))
-  const [cursada, setCursada] = useState(() => cargarLista("cursada"))
+  const [favoritas, setFavoritas] = useState(() => cargar("favoritas", []))
+  const [cursada, setCursada] = useState(() => cargar("cursada", []))
+  const [condiciones, setCondiciones] = useState(() => cargar("condiciones", {}))
+  const [anioActual, setAnioActual] = useState(() => cargar("anioActual", 1))
   const [enfocada, setEnfocada] = useState(null)
+  const [favoritosAbierto, setFavoritosAbierto] = useState(false)
 
-  useEffect(() => guardarLista("favoritas", favoritas), [favoritas])
-  useEffect(() => guardarLista("cursada", cursada), [cursada])
+  useEffect(() => guardar("favoritas", favoritas), [favoritas])
+  useEffect(() => guardar("cursada", cursada), [cursada])
+  useEffect(() => guardar("condiciones", condiciones), [condiciones])
+  useEffect(() => guardar("anioActual", anioActual), [anioActual])
 
   const toggleFavorita = (id) => setFavoritas((prev) => alternar(prev, id))
   const toggleCursada = (id) => setCursada((prev) => alternar(prev, id))
   const limpiarCursada = () => setCursada([])
+
+  // Botón de simulación: pasa a la siguiente condición
+  const simularCondicion = (id) =>
+    setCondiciones((prev) => {
+      const actual = prev[id] ?? "sin_nota"
+      const siguiente = CONDICIONES[(CONDICIONES.indexOf(actual) + 1) % CONDICIONES.length]
+      return { ...prev, [id]: siguiente }
+    })
 
   // Si toco la misma materia otra vez, salgo del modo enfoque
   const enfocar = (id) => setEnfocada((prev) => (prev === id ? null : id))
@@ -48,6 +66,11 @@ export function PlanProvider({ children }) {
   const quitarMateria = (id) => {
     setFavoritas((prev) => prev.filter((x) => x !== id))
     setCursada((prev) => prev.filter((x) => x !== id))
+    setCondiciones((prev) => {
+      const copia = { ...prev }
+      delete copia[id]
+      return copia
+    })
     setEnfocada((prev) => (prev === id ? null : prev))
   }
 
@@ -56,13 +79,20 @@ export function PlanProvider({ children }) {
       value={{
         favoritas,
         cursada,
+        condiciones,
+        anioActual,
         enfocada,
+        favoritosAbierto,
         toggleFavorita,
         toggleCursada,
         limpiarCursada,
+        simularCondicion,
+        setAnioActual,
         enfocar,
         salirDeEnfoque,
         quitarMateria,
+        abrirFavoritos: () => setFavoritosAbierto(true),
+        cerrarFavoritos: () => setFavoritosAbierto(false),
       }}
     >
       {children}

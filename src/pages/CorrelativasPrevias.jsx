@@ -30,18 +30,18 @@ export default function CorrelativasPrevias() {
 
   return (
     <div className="flex flex-col gap-6">
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-sitec-rojo">{error}</p>}
 
       <section>
-        <h2 className="font-bold mb-2">Directas</h2>
+        <h2 className="text-sm text-zinc-600 mb-2">Directas</h2>
         <ListaMaterias
           materias={directas}
-          color="border-amber-500"
+          color="bg-sitec-amarillo text-zinc-900"
           vacio="No tiene correlativas: se puede cursar sin requisitos."
           accion={(previa) => (
             <button
               onClick={() => quitar(previa)}
-              className="text-zinc-500 hover:text-red-600 text-sm cursor-pointer"
+              className="text-zinc-800 hover:text-sitec-rojo text-sm cursor-pointer"
               aria-label={`Quitar correlativa ${previa.nombre_materia}`}
               title="Quitar esta correlativa"
             >
@@ -53,8 +53,8 @@ export default function CorrelativasPrevias() {
 
       {indirectas.length > 0 && (
         <section>
-          <h2 className="font-bold mb-2">Indirectas (previas de las previas)</h2>
-          <ListaMaterias materias={indirectas} color="border-amber-300" />
+          <h2 className="text-sm text-zinc-600 mb-2">Indirectas (previas de las previas)</h2>
+          <ListaMaterias materias={indirectas} color="bg-zinc-200 text-zinc-800" />
         </section>
       )}
     </div>

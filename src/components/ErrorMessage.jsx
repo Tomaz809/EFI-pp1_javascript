@@ -1,12 +1,12 @@
 export default function ErrorMessage({ mensaje, onReintentar }) {
   return (
-    <div className="max-w-xl mx-auto my-10 bg-red-50 border border-red-200 text-red-800 p-6 rounded-lg text-center">
-      <p className="font-bold text-lg">No se pudieron cargar los datos</p>
-      <p className="text-sm mt-1">{mensaje}</p>
+    <div className="max-w-xl mx-auto my-10 bg-white border border-zinc-300 border-l-4 border-l-sitec-rojo p-5">
+      <p className="text-zinc-800">No se pudieron cargar los datos</p>
+      <p className="text-sm text-zinc-500 mt-1">{mensaje}</p>
       {onReintentar && (
         <button
           onClick={onReintentar}
-          className="mt-4 bg-itec-700 hover:bg-itec-600 text-white text-sm px-4 py-2 rounded cursor-pointer"
+          className="mt-4 bg-sitec-rojo hover:bg-sitec-rojo-2 text-white text-sm px-4 py-1.5 cursor-pointer"
         >
           Reintentar
         </button>

@@ -18,23 +18,23 @@ export default function MateriasQueDestraba() {
   return (
     <div className="flex flex-col gap-6">
       <p className="text-sm text-zinc-500">
-        Aprobar esta materia destraba <strong className="text-emerald-700">{todas.size}</strong>{" "}
+        Aprobar esta materia destraba <strong className="text-zinc-800">{todas.size}</strong>{" "}
         materia(s) en total.
       </p>
 
       <section>
-        <h2 className="font-bold mb-2">Directamente</h2>
+        <h2 className="text-sm text-zinc-600 mb-2">Directamente</h2>
         <ListaMaterias
           materias={materiasDirectas}
-          color="border-emerald-500"
+          color="bg-sitec-gris text-white"
           vacio="No es correlativa de ninguna materia."
         />
       </section>
 
       {materiasIndirectas.length > 0 && (
         <section>
-          <h2 className="font-bold mb-2">Más adelante (en cadena)</h2>
-          <ListaMaterias materias={materiasIndirectas} color="border-emerald-300" />
+          <h2 className="text-sm text-zinc-600 mb-2">Más adelante (en cadena)</h2>
+          <ListaMaterias materias={materiasIndirectas} color="bg-zinc-200 text-zinc-800" />
         </section>
       )}
     </div>
