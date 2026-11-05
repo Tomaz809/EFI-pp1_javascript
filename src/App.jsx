@@ -31,7 +31,7 @@ function App() {
           <Sidebar abierto={menuAbierto} onCerrar={() => setMenuAbierto(false)} />
 
           <div className="flex-1 min-w-0 px-4 sm:px-10 py-8">
-            <div className="max-w-5xl">
+            <div className="max-w-7xl mx-auto">
               <Routes>
                 <Route path="/" element={<Home />} />
 
