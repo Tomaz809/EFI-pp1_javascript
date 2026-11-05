@@ -1,6 +1,6 @@
 // Todas las peticiones a la API de FastAPI (EFI PP1 Python) pasan por acá.
 // La URL se toma de la variable de entorno VITE_API_URL (.env / Vercel).
-export const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
+export const API_URL = import.meta.env.VITE_API_URL || "https://efi-python-javascript.fastapicloud.dev"
 
 // La API pagina con fastapi-pagination: { items, total, page, size, pages }.
 // Pedimos size=100 (el máximo) para traer el plan completo en una sola página.
