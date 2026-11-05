@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { Link, NavLink, Outlet, useNavigate, useParams } from "react-router-dom"
+import { Star, ArrowLeft } from "lucide-react"
 import ErrorMessage from "../components/ErrorMessage"
 import Loader from "../components/Loader"
 import Panel from "../components/Panel"
@@ -75,8 +76,9 @@ export default function MateriaDetalle() {
 
   return (
     <main className="max-w-3xl">
-      <Link to="/materias" className="text-sm text-sitec-rojo hover:underline">
-        ← Volver al Plan de Estudio
+      <Link to="/materias" className="text-sm text-sitec-rojo hover:underline inline-flex items-center gap-1.5">
+        <ArrowLeft className="w-4 h-4" />
+        <span>Volver al Plan de Estudio</span>
       </Link>
 
       <div className="mt-4 bg-sitec-barra text-white px-6 py-5">
@@ -89,11 +91,11 @@ export default function MateriaDetalle() {
           </div>
           <button
             onClick={() => toggleFavorita(materia.id)}
-            className={`text-3xl leading-none cursor-pointer ${esFavorita ? "text-white" : "text-zinc-500 hover:text-zinc-300"}`}
+            className="cursor-pointer transition-transform hover:scale-110"
             aria-label={esFavorita ? "Quitar de favoritos" : "Agregar a favoritos"}
             title={esFavorita ? "Quitar de favoritos" : "Agregar a favoritos"}
           >
-            ★
+            <Star className={`w-7 h-7 transition-colors ${esFavorita ? "fill-amber-400 text-amber-400" : "text-zinc-500 hover:text-zinc-300 fill-transparent"}`} />
           </button>
         </div>
       </div>

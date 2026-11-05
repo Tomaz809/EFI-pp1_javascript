@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { ArrowRight } from "lucide-react"
 
 const ACCESOS = [
   { texto: "Inscripciones Para Cursar", to: "/inscripciones/cursar", desc: "Inscribite a materias con control de correlativas" },
@@ -52,7 +53,7 @@ export default function Home() {
             >
               <p className="text-[15px] font-semibold flex items-center justify-between">
                 <span>{a.texto}</span>
-                <span className="opacity-70 group-hover:translate-x-1 transition-transform">➔</span>
+                <ArrowRight className="w-4 h-4 opacity-70 group-hover:translate-x-1 transition-transform" />
               </p>
               <p className="text-[12px] text-zinc-300 group-hover:text-zinc-100 mt-1 leading-snug">
                 {a.desc}

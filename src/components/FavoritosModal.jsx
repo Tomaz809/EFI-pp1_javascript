@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
+import { Star, X } from "lucide-react"
 import { PlanContext } from "../context/PlanContext"
 import usePlanEstudios from "../hooks/usePlanEstudios"
 import ErrorMessage from "./ErrorMessage"
@@ -22,7 +23,7 @@ function ContenidoFavoritos() {
           No tenés materias marcadas como favoritas todavía.
         </p>
         <p className="text-xs text-zinc-500 mt-2">
-          Podés marcarlas con la estrella (★) desde{" "}
+          Podés marcarlas con la estrella desde{" "}
           <Link
             to="/estado-cursada"
             onClick={cerrarFavoritos}
@@ -61,11 +62,11 @@ function ContenidoFavoritos() {
               </Link>
               <button
                 onClick={() => toggleFavorita(materia.id)}
-                className="text-2xl text-amber-400 hover:text-zinc-300 cursor-pointer transition-transform hover:scale-110"
+                className="cursor-pointer transition-transform hover:scale-110"
                 aria-label="Quitar de favoritos"
                 title="Quitar de favoritos"
               >
-                ★
+                <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
               </button>
             </div>
 
@@ -131,10 +132,10 @@ export default function FavoritosModal() {
           </div>
           <button
             onClick={cerrarFavoritos}
-            className="w-8 h-8 rounded-full hover:bg-zinc-200 text-zinc-500 hover:text-zinc-800 text-lg cursor-pointer flex items-center justify-center transition-colors"
+            className="w-8 h-8 rounded-full hover:bg-zinc-200 text-zinc-500 hover:text-zinc-800 cursor-pointer flex items-center justify-center transition-colors"
             aria-label="Cerrar modal"
           >
-            ✕
+            <X className="w-5 h-5" />
           </button>
         </div>
         <div className="px-6 py-6 max-h-[75vh] overflow-y-auto">

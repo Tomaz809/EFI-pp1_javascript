@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Lock, Check, Zap, AlertTriangle, Clock, X } from "lucide-react"
 
 // Estilos de la barra con colores bien diferenciados:
 // - cursando: Azul Institucional SITEC (#1d4ed8)
@@ -39,7 +40,7 @@ export default function BarraMateria({
       setTimeout(() => setAlertaBloqueo(false), 3500)
       return
     }
-    if (onToggle) onToggle(materia.id)
+    if (onToggle) onToggle(materia.id, materia.nombre_materia)
   }
 
   const faltantes = requisitosDetalle.filter((r) => !r.inscripto)
@@ -89,13 +90,11 @@ export default function BarraMateria({
           }`}
         >
           {!esDelAnioActual ? (
-            <span className="text-xs select-none" title="Materia de otro ciclo lectivo">
-              🔒
-            </span>
+            <Lock className="w-3.5 h-3.5 text-zinc-300" />
           ) : inscripta ? (
-            <span className="select-none font-bold">✓</span>
+            <Check className="w-4 h-4 stroke-[3] text-blue-900" />
           ) : (
-            "✓"
+            <Check className="w-4 h-4 text-transparent hover:text-white" />
           )}
         </button>
       </div>
@@ -103,14 +102,17 @@ export default function BarraMateria({
       {/* Alerta si intenta inscribirse en una materia de otro año */}
       {alertaBloqueo && (
         <div className="bg-amber-100 border-l-4 border-amber-600 text-amber-950 text-xs px-3.5 py-2 mt-2 shadow-sm animate-in slide-in-from-top-1 duration-150 flex items-center justify-between">
-          <span>
-            ⚠️ <strong>Año bloqueado:</strong> Estás cursando <strong>{anioActual}° año</strong>. Solo podés inscribirte a materias de tu año en curso.
+          <span className="flex items-center gap-1.5">
+            <AlertTriangle className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+            <span>
+              <strong>Año bloqueado:</strong> Estás cursando <strong>{anioActual}° año</strong>. Solo podés inscribirte a materias de tu año en curso.
+            </span>
           </span>
           <button
             onClick={() => setAlertaBloqueo(false)}
             className="text-amber-800 hover:text-black font-bold ml-2 cursor-pointer"
           >
-            ✕
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
       )}
@@ -119,9 +121,10 @@ export default function BarraMateria({
       {inscripta && aviso && (
         <div
           role="alert"
-          className="bg-red-50 border-l-4 border-sitec-rojo text-sitec-rojo text-[12px] font-semibold pl-3.5 pr-3 py-2 mt-2 shadow-2xs"
+          className="bg-red-50 border-l-4 border-sitec-rojo text-sitec-rojo text-[12px] font-semibold pl-3.5 pr-3 py-2 mt-2 shadow-2xs flex items-center gap-1.5"
         >
-          ⚠ {aviso}
+          <AlertTriangle className="w-3.5 h-3.5 text-sitec-rojo shrink-0" />
+          <span>{aviso}</span>
         </div>
       )}
 
@@ -130,8 +133,9 @@ export default function BarraMateria({
         <div className="mt-2 space-y-1">
           {habilitaNombres.length > 0 ? (
             <div className="bg-blue-50 border border-blue-200 p-2.5 text-xs text-blue-950 flex flex-wrap items-center gap-1.5 shadow-2xs">
-              <span className="font-semibold text-blue-900">
-                ⚡ Destraba en años superiores:
+              <span className="font-semibold text-blue-900 flex items-center gap-1">
+                <Zap className="w-3.5 h-3.5 text-blue-600" />
+                <span>Destraba en años superiores:</span>
               </span>
               <div className="flex flex-wrap gap-1 mt-0.5 sm:mt-0">
                 {habilitaNombres.map((nom) => (
@@ -145,8 +149,9 @@ export default function BarraMateria({
               </div>
             </div>
           ) : (
-            <div className="bg-zinc-100 border-l-4 border-zinc-500 text-[12px] text-zinc-800 pl-3.5 pr-3 py-2 font-medium shadow-2xs">
-              ⚠ {mensaje}
+            <div className="bg-zinc-100 border-l-4 border-zinc-500 text-[12px] text-zinc-800 pl-3.5 pr-3 py-2 font-medium shadow-2xs flex items-center gap-1.5">
+              <AlertTriangle className="w-3.5 h-3.5 text-zinc-600 shrink-0" />
+              <span>{mensaje}</span>
             </div>
           )}
         </div>
@@ -158,8 +163,8 @@ export default function BarraMateria({
           <div className="flex items-center justify-between gap-1 border-b border-zinc-200 pb-1">
             <span className="font-semibold text-zinc-600">Requisitos previos:</span>
             {requisitosInscriptos ? (
-              <span className="text-emerald-700 font-bold bg-emerald-100 border border-emerald-300 px-1.5 py-0.2 rounded text-[10px]">
-                ✓ Habilitada al 100%
+              <span className="text-emerald-700 font-bold bg-emerald-100 border border-emerald-300 px-1.5 py-0.2 rounded text-[10px] flex items-center gap-1">
+                <Check className="w-2.5 h-2.5" /> Habilitada al 100%
               </span>
             ) : (
               <span className="text-amber-800 font-semibold bg-amber-100 border border-amber-300 px-1.5 py-0.2 rounded text-[10px]">
@@ -172,19 +177,19 @@ export default function BarraMateria({
             {cumplidos.map((r) => (
               <span
                 key={r.id}
-                className="inline-flex items-center gap-0.5 bg-emerald-50 text-emerald-800 border border-emerald-300 px-1.5 py-0.2 rounded text-[10px] font-medium"
+                className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-300 px-1.5 py-0.2 rounded text-[10px] font-medium"
                 title="Correlativa inscripta"
               >
-                ✓ {r.nombre}
+                <Check className="w-2.5 h-2.5" /> {r.nombre}
               </span>
             ))}
             {faltantes.map((r) => (
               <span
                 key={r.id}
-                className="inline-flex items-center gap-0.5 bg-zinc-200/80 text-zinc-700 border border-zinc-300 px-1.5 py-0.2 rounded text-[10px]"
+                className="inline-flex items-center gap-1 bg-zinc-200/80 text-zinc-700 border border-zinc-300 px-1.5 py-0.2 rounded text-[10px]"
                 title="Falta inscribirte a esta correlativa"
               >
-                ⏳ Falta: {r.nombre}
+                <Clock className="w-2.5 h-2.5 text-zinc-500" /> Falta: {r.nombre}
               </span>
             ))}
           </div>

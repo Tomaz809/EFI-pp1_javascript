@@ -29,3 +29,19 @@ body {
   background-color: var(--color-sitec-bg);
   font-size: 14px;
 }
+
+/* Reglas de impresión para el comprobante oficial de cursada */
+@media print {
+  header,
+  aside,
+  .no-print,
+  button:not(.print-show) {
+    display: none !important;
+  }
+  body,
+  main {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+  }
+}

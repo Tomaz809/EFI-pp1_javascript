@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
+import { Star, ArrowRight } from "lucide-react"
 import ErrorMessage from "../components/ErrorMessage"
 import Loader from "../components/Loader"
 import PageHeader from "../components/PageHeader"
@@ -25,7 +26,7 @@ const CONDICION = {
   },
 }
 
-// /estado-cursada: condición de las materias inscriptas (fiel a Boceto 2)
+// /estado-cursada: condición académica de las materias inscriptas (boceto 2)
 export default function Condicion() {
   const { materias, loading, error, recargar } = usePlanEstudios()
   const { cursada, condiciones, simularCondicion, favoritas, toggleFavorita } =
@@ -42,7 +43,7 @@ export default function Condicion() {
     <main>
       <PageHeader
         titulo="Estado de Cursada"
-        subtitulo="Condición académica de las materias inscriptas"
+        subtitulo="Condición académica de las materias del cuatrimestre"
       />
 
       <Panel>
@@ -53,9 +54,10 @@ export default function Condicion() {
             </p>
             <Link
               to="/inscripciones/cursar"
-              className="inline-block bg-sitec-barra hover:bg-sitec-rojo text-white px-5 py-2.5 text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-sitec-barra hover:bg-sitec-rojo text-white px-5 py-2.5 text-sm font-medium transition-colors"
             >
-              ➔ Ir a Inscripciones Para Cursar
+              <span>Ir a Inscripciones Para Cursar</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         ) : (
@@ -76,21 +78,25 @@ export default function Condicion() {
                     key={materia.id}
                     className="relative bg-sitec-barra text-white text-center px-6 pt-5 pb-6 shadow-sm border border-black/10 transition-shadow hover:shadow-md"
                   >
-                    {/* Botón de favoritos / prioritaria */}
+                    {/* Botón de favoritos / prioritaria con icono de Lucide */}
                     <button
-                      onClick={() => toggleFavorita(materia.id)}
-                      className={`absolute top-2.5 right-3.5 text-3xl leading-none cursor-pointer transition-colors ${
-                        esFavorita ? "text-amber-400 scale-110" : "text-zinc-500 hover:text-zinc-300"
-                      }`}
+                      onClick={() => toggleFavorita(materia.id, materia.nombre_materia)}
+                      className="absolute top-3 right-3 cursor-pointer transition-transform hover:scale-110"
                       aria-label={esFavorita ? "Quitar de favoritos" : "Marcar como prioritaria"}
                       title={esFavorita ? "Materia prioritaria (marcada)" : "Marcar como prioritaria"}
                     >
-                      ★
+                      <Star
+                        className={`w-6 h-6 transition-colors ${
+                          esFavorita
+                            ? "fill-amber-400 text-amber-400"
+                            : "text-zinc-500 hover:text-zinc-300 fill-transparent"
+                        }`}
+                      />
                     </button>
 
-                    <h2 className="text-[17px] font-medium px-6 leading-snug">
+                    <h3 className="text-[17px] font-medium px-6 leading-snug">
                       {materia.nombre_materia}
-                    </h2>
+                    </h3>
                     <p className="text-[13px] text-zinc-300 mt-1">
                       {materia.anio}° año · Cód. {materia.codigo}
                     </p>
@@ -103,9 +109,9 @@ export default function Condicion() {
                         </span>
                       </span>
 
-                      {/* Botón circular de simulación (Boceto 2) */}
+                      {/* Botón circular de simulación interactiva (Boceto 2) */}
                       <button
-                        onClick={() => simularCondicion(materia.id)}
+                        onClick={() => simularCondicion(materia.id, materia.nombre_materia)}
                         className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full cursor-pointer transition-transform hover:scale-110 active:scale-95 shadow-sm ${cond.circulo}`}
                         aria-label={`Simular carga de nota de ${materia.nombre_materia}`}
                         title="Hacé clic para cambiar la condición (simular carga de nota)"
