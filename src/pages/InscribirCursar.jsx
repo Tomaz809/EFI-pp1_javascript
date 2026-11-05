@@ -7,11 +7,7 @@ import { PlanContext } from "../context/PlanContext"
 import { destrabaDe, previasDe } from "../utils/correlativas"
 import { estadoInscripcion } from "../utils/mensajes"
 
-<<<<<<< Updated upstream
-// Subruta /inscripciones/cursar (fiel a Boceto 1)
-=======
 // Subruta /inscripciones/cursar: 3 columnas de años con colores diferenciados, leyenda y separación
->>>>>>> Stashed changes
 export default function InscribirCursar() {
   const { materias, grafo } = useOutletContext()
   const { cursada, toggleCursada, anioActual, setAnioActual, condiciones } =
@@ -33,28 +29,6 @@ export default function InscribirCursar() {
       ? `( Sin materias a cursar en ${anioActual}° año )`
       : `( ${inscriptasDelAnio} ${inscriptasDelAnio === 1 ? "materia inscripta" : "materias inscriptas"} en ${anioActual}° año )`
 
-<<<<<<< Updated upstream
-  const renderBarra = (materia) => {
-    const inscripta = cursada.includes(materia.id)
-    const { estado, mensaje, aviso } = estadoInscripcion(
-      materia,
-      materias,
-      grafo,
-      condiciones
-    )
-    return (
-      <BarraMateria
-        key={materia.id}
-        materia={materia}
-        estado={inscripta ? estado : "libre"}
-        mensaje={mensaje}
-        aviso={aviso}
-        onToggle={toggleCursada}
-        textoBoton={inscripta ? "Cancelar inscripción" : "Inscribirse"}
-      />
-    )
-  }
-=======
   // Resaltado de conexiones por hover (hacia adelante y hacia atrás)
   const idsResaltados = useMemo(() => {
     if (!hoveredId) return new Set()
@@ -62,7 +36,6 @@ export default function InscribirCursar() {
     const previas = previasDe(hoveredId, grafo)
     return new Set([...destraba, ...previas])
   }, [hoveredId, grafo])
->>>>>>> Stashed changes
 
   return (
     <main>
@@ -71,53 +44,6 @@ export default function InscribirCursar() {
         subtitulo={`Carrera :DESARROLLO DE SOFTWARE _ ${resumen}`}
       />
 
-<<<<<<< Updated upstream
-      <Panel>
-        <div className="flex flex-wrap items-center gap-3 mb-6 p-3 bg-zinc-50 border border-zinc-200 text-sm">
-          <label htmlFor="anio" className="font-medium text-zinc-700">
-            Año que cursás:
-          </label>
-          <select
-            id="anio"
-            value={anioActual}
-            onChange={(e) => setAnioActual(Number(e.target.value))}
-            className="border border-zinc-300 rounded px-2.5 py-1 bg-white font-medium text-zinc-800 shadow-2xs focus:outline-hidden focus:border-sitec-rojo"
-          >
-            {anios.map((a) => (
-              <option key={a} value={a}>
-                {a}° año
-              </option>
-            ))}
-          </select>
-          <span className="text-xs text-zinc-500 sm:ml-auto">
-            Hacé clic en el círculo de la derecha para inscribirte o cancelar.
-          </span>
-        </div>
-
-        <h2 className="text-[15px] font-semibold text-zinc-700 mb-3 flex items-center gap-2">
-          <span>Materias de {anioActual}° año</span>
-          <span className="text-xs font-normal text-zinc-500">
-            ({materias.filter((m) => m.anio === anioActual).length} materias)
-          </span>
-        </h2>
-        <ul className="flex flex-col gap-3.5 max-w-xl">
-          {materias.filter((m) => m.anio === anioActual).map(renderBarra)}
-        </ul>
-
-        {anioSiguiente && (
-          <div className="mt-10 pt-6 border-t border-zinc-200">
-            <h2 className="text-[15px] font-semibold text-zinc-700 mb-3 flex items-center gap-2">
-              <span>Materias de {anioSiguiente}° año</span>
-              <span className="text-xs font-normal text-zinc-500">
-                (Siguiente ciclo)
-              </span>
-            </h2>
-            <ul className="flex flex-col gap-3.5 max-w-xl">
-              {materias.filter((m) => m.anio === anioSiguiente).map(renderBarra)}
-            </ul>
-          </div>
-        )}
-=======
       <Panel className="p-4 sm:p-6 lg:p-8">
         {/* Barra superior de control y selección de año */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6 p-4 bg-zinc-50 border border-zinc-200">
@@ -309,7 +235,6 @@ export default function InscribirCursar() {
             )
           })}
         </div>
->>>>>>> Stashed changes
       </Panel>
     </main>
   )
