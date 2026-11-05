@@ -1,11 +1,3 @@
-<<<<<<< Updated upstream
-// Barra de una materia, siguiendo fielmente el boceto de "Inscripciones Para Cursar"
-// estado: "libre" (sin inscribir), "sin_correlativa" (gris) o "con_correlativa" (amarillo)
-const ESTILOS = {
-  libre: "bg-sitec-barra text-white shadow-xs",
-  sin_correlativa: "bg-sitec-gris text-white shadow-xs",
-  con_correlativa: "bg-sitec-amarillo text-zinc-900 shadow-xs font-medium",
-=======
 import { useState } from "react"
 
 // Estilos de la barra con colores bien diferenciados:
@@ -20,7 +12,6 @@ const ESTILOS = {
   sin_correlativa: "bg-[#64748b] text-white shadow-xs border-l-4 border-zinc-400 font-medium",
   libre: "bg-sitec-barra text-white shadow-xs border-l-4 border-transparent hover:bg-sitec-barra/90",
   bloqueada: "bg-[#2a2f35] text-zinc-300 shadow-xs border-l-4 border-zinc-600 opacity-95",
->>>>>>> Stashed changes
 }
 
 export default function BarraMateria({
@@ -30,21 +21,6 @@ export default function BarraMateria({
   aviso,
   onToggle,
   textoBoton,
-<<<<<<< Updated upstream
-}) {
-  const inscripta = estado !== "libre"
-
-  return (
-    <li className="list-none">
-      <div
-        className={`flex items-center justify-between gap-4 pl-6 sm:pl-8 pr-4 py-3.5 transition-colors duration-150 ${ESTILOS[estado]}`}
-      >
-        <div className="flex-1 min-w-0 pr-2">
-          <span className="text-[16px] sm:text-[17px] tracking-wide block truncate">
-            {materia.nombre_materia}
-          </span>
-          <span className="text-[11px] opacity-75 block">
-=======
   esDelAnioActual = true,
   anioActual = 1,
   estaResaltada = false,
@@ -89,7 +65,6 @@ export default function BarraMateria({
             {materia.nombre_materia}
           </span>
           <span className="text-[11px] opacity-80 block mt-0.5">
->>>>>>> Stashed changes
             Cód. {materia.codigo} · {materia.anio}° año · {materia.cuatrimestral ? "Cuatrimestral" : "Anual"}
           </span>
         </div>
@@ -105,14 +80,6 @@ export default function BarraMateria({
           }
           aria-label={`${textoBoton} ${materia.nombre_materia}`}
           aria-pressed={inscripta}
-<<<<<<< Updated upstream
-          className={`w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full cursor-pointer transition-all duration-150 flex items-center justify-center text-lg shadow-sm
-            ${
-              inscripta
-                ? "bg-white text-zinc-900 font-bold scale-105 ring-2 ring-black/20"
-                : "bg-zinc-600/80 hover:bg-zinc-500 text-transparent hover:scale-105"
-            }`}
-=======
           className={`w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full cursor-pointer transition-all duration-150 flex items-center justify-center text-sm sm:text-base shadow-sm ${
             !esDelAnioActual
               ? "bg-zinc-800/90 hover:bg-zinc-700 text-zinc-300 border border-zinc-600/50"
@@ -120,7 +87,6 @@ export default function BarraMateria({
                 ? "bg-white text-blue-900 font-bold scale-105 ring-2 ring-black/25 shadow-md"
                 : "bg-zinc-600/80 hover:bg-zinc-500 text-transparent hover:scale-105"
           }`}
->>>>>>> Stashed changes
         >
           {!esDelAnioActual ? (
             <span className="text-xs select-none" title="Materia de otro ciclo lectivo">
@@ -134,13 +100,6 @@ export default function BarraMateria({
         </button>
       </div>
 
-<<<<<<< Updated upstream
-      {/* Alerta de correlativas no aprobadas */}
-      {inscripta && aviso && (
-        <div
-          role="alert"
-          className="bg-red-50 border-l-4 border-sitec-rojo text-sitec-rojo text-[13px] font-semibold pl-4 pr-3 py-2 mt-1.5 shadow-xs"
-=======
       {/* Alerta si intenta inscribirse en una materia de otro año */}
       {alertaBloqueo && (
         <div className="bg-amber-100 border-l-4 border-amber-600 text-amber-950 text-xs px-3.5 py-2 mt-2 shadow-sm animate-in slide-in-from-top-1 duration-150 flex items-center justify-between">
@@ -161,18 +120,11 @@ export default function BarraMateria({
         <div
           role="alert"
           className="bg-red-50 border-l-4 border-sitec-rojo text-sitec-rojo text-[12px] font-semibold pl-3.5 pr-3 py-2 mt-2 shadow-2xs"
->>>>>>> Stashed changes
         >
           ⚠ {aviso}
         </div>
       )}
 
-<<<<<<< Updated upstream
-      {/* Mensaje según si tiene o no correlativas (Mockup 1) */}
-      {inscripta && mensaje && (
-        <div className="bg-zinc-100 border-l-4 border-zinc-400 text-[13px] text-zinc-700 pl-4 pr-3 py-1.5 mt-1">
-          {mensaje}
-=======
       {/* Si está inscripta: detalles de materias que destraba o advertencia OJO */}
       {inscripta && (
         <div className="mt-2 space-y-1">
@@ -236,7 +188,6 @@ export default function BarraMateria({
               </span>
             ))}
           </div>
->>>>>>> Stashed changes
         </div>
       )}
     </li>
