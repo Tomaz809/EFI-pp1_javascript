@@ -1,8 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom"
 
-// Menú lateral del SITEC.
-// Solo "Inscripciones" (Cursar / Ver Inscripciones) y "Estado Cursada" son funcionales;
-// el resto se muestra como referencia del sistema real.
+// Menú lateral del SITEC (ITEC Río Cuarto)
+// Mantiene las rutas y lógica del proyecto, refinando la estética para que coincida con los bocetos oficiales.
 const MENU = [
   { titulo: "Mis Datos", icono: "▤", muestra: true },
   {
@@ -25,15 +24,18 @@ const MENU = [
       { texto: "Cargar plan", to: "/agregar" },
     ],
   },
-  { titulo: "Llamado a Examen", icono: "▤", muestra: true },
+  { titulo: "LLamado a Examen", icono: "▤", muestra: true },
   { titulo: "Institucional", icono: "▤", muestra: true },
 ]
 
 const MUESTRA = "Solo muestra del SITEC: no forma parte de este módulo"
 
 const subLink = ({ isActive }) =>
-  `block pl-10 pr-4 py-2 text-xs border-b border-sitec-line
-  ${isActive ? "bg-sitec-line text-white font-bold" : "text-sitec-text hover:text-white"}`
+  `block pl-9 pr-4 py-2 text-xs border-b border-sitec-line transition-colors ${
+    isActive
+      ? "bg-sitec-rojo text-white font-bold tracking-wide"
+      : "text-sitec-text hover:text-white hover:bg-sitec-line/40"
+  }`
 
 export default function Sidebar({ abierto, onCerrar }) {
   const { pathname } = useLocation()
@@ -44,24 +46,38 @@ export default function Sidebar({ abierto, onCerrar }) {
   return (
     <>
       {abierto && (
-        <div onClick={onCerrar} className="fixed inset-0 bg-black/40 z-30 lg:hidden" aria-hidden="true" />
+        <div
+          onClick={onCerrar}
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden backdrop-blur-xs"
+          aria-hidden="true"
+        />
       )}
 
       <aside
-        className={`fixed lg:sticky top-11 left-0 z-40 h-[calc(100vh-2.75rem)] w-44 shrink-0 bg-sitec-side text-sitec-text
-          flex flex-col overflow-y-auto transition-transform
-          ${abierto ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
+        className={`fixed lg:sticky top-11 left-0 z-40 h-[calc(100vh-2.75rem)] w-48 shrink-0 bg-sitec-side text-sitec-text
+          flex flex-col overflow-y-auto transition-transform duration-200 select-none
+          ${abierto ? "translate-x-0 shadow-2xl" : "-translate-x-full lg:translate-x-0"}`}
       >
-        {/* Foto y nombre del alumno (genérico) */}
-        <div className="pt-4 pb-2 border-b border-sitec-line">
-          <svg viewBox="0 0 80 80" className="w-24 h-24 mx-auto rounded-full border-2 border-zinc-500" aria-hidden="true">
-            <circle cx="40" cy="40" r="40" fill="#f2f2f2" />
-            <circle cx="40" cy="31" r="14" fill="#9a9a9a" />
-            <path d="M12 72c4-15 15-22 28-22s24 7 28 22" fill="#9a9a9a" />
-          </svg>
-          <p className="text-[10px] text-right px-3 mt-3 uppercase">Alumno, ITEC</p>
+        {/* Foto y datos del alumno (estilo SITEC oficial) */}
+        <div className="pt-4 pb-3 border-b border-sitec-line text-center">
+          <div className="relative inline-block">
+            <svg
+              viewBox="0 0 80 80"
+              className="w-20 h-20 mx-auto rounded-full border border-zinc-500/60 shadow-inner bg-zinc-200"
+              aria-hidden="true"
+            >
+              <circle cx="40" cy="40" r="40" fill="#e5e7eb" />
+              <circle cx="40" cy="30" r="14" fill="#9ca3af" />
+              <path d="M14 70c4-14 15-20 26-20s22 6 26 20" fill="#9ca3af" />
+            </svg>
+          </div>
+          <p className="text-[11px] font-semibold text-zinc-300 mt-2 px-3 uppercase tracking-wider">
+            ALUMNO, ITEC
+          </p>
+          <p className="text-[9px] text-zinc-400">Desarrollo de Software</p>
         </div>
 
+        {/* Navegación lateral */}
         <nav className="flex-1 text-[13px]" onClick={onCerrar}>
           {MENU.map((grupo) => {
             if (grupo.muestra) {
@@ -69,13 +85,13 @@ export default function Sidebar({ abierto, onCerrar }) {
                 <div
                   key={grupo.titulo}
                   title={MUESTRA}
-                  className="flex items-center justify-between px-4 py-2.5 bg-sitec-item border-b border-sitec-line opacity-50 cursor-not-allowed"
+                  className="flex items-center justify-between px-3.5 py-2.5 bg-sitec-item border-b border-sitec-line opacity-60 cursor-not-allowed hover:bg-sitec-item/80"
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="w-4 text-center text-xs">{grupo.icono}</span>
-                    {grupo.titulo}
+                  <span className="flex items-center gap-2.5">
+                    <span className="w-4 text-center text-xs opacity-75">{grupo.icono}</span>
+                    <span className="text-[12px]">{grupo.titulo}</span>
                   </span>
-                  <span className="text-[10px]">▾</span>
+                  <span className="text-[10px] text-zinc-400">▾</span>
                 </div>
               )
             }
@@ -84,14 +100,14 @@ export default function Sidebar({ abierto, onCerrar }) {
             return (
               <div key={grupo.titulo}>
                 <div
-                  className={`flex items-center justify-between px-4 py-2.5 border-b border-sitec-line text-white
-                    ${activo ? "bg-sitec-rojo" : "bg-sitec-item"}`}
+                  className={`flex items-center justify-between px-3.5 py-2.5 border-b border-sitec-line text-white transition-colors
+                    ${activo ? "bg-sitec-rojo font-medium" : "bg-sitec-item"}`}
                 >
-                  <span className="flex items-center gap-3">
+                  <span className="flex items-center gap-2.5">
                     <span className="w-4 text-center text-xs">{grupo.icono}</span>
-                    {grupo.titulo}
+                    <span className="text-[12px]">{grupo.titulo}</span>
                   </span>
-                  <span className="text-[10px]">▸</span>
+                  <span className="text-[10px] text-zinc-300">{activo ? "▾" : "▸"}</span>
                 </div>
                 <div className="bg-sitec-sub">
                   {grupo.items.map((item) =>
@@ -99,7 +115,7 @@ export default function Sidebar({ abierto, onCerrar }) {
                       <span
                         key={item.texto}
                         title={MUESTRA}
-                        className="block pl-10 pr-4 py-2 text-xs border-b border-sitec-line opacity-50 cursor-not-allowed"
+                        className="block pl-9 pr-4 py-2 text-xs border-b border-sitec-line opacity-50 cursor-not-allowed"
                       >
                         {item.texto}
                       </span>
@@ -115,9 +131,37 @@ export default function Sidebar({ abierto, onCerrar }) {
           })}
         </nav>
 
-        <div className="text-xs mt-6">
-          <p title={MUESTRA} className="px-4 py-3 border-t border-sitec-line opacity-50 cursor-not-allowed">Ayuda</p>
-          <p title={MUESTRA} className="px-4 py-3 border-t border-sitec-line opacity-50 cursor-not-allowed">Descarga de Archivos</p>
+        {/* Institucional ITEC (Logo oficial en el pie del menú) */}
+        <div className="p-3 border-t border-sitec-line bg-black/20 flex items-center justify-center gap-2.5">
+          <img
+            src="/iteclogo.jpg"
+            alt="ITEC Río Cuarto"
+            className="h-7 w-auto object-contain rounded opacity-85"
+            onError={(e) => {
+              e.currentTarget.style.display = "none"
+            }}
+          />
+          <div className="text-[10px] leading-tight text-zinc-400">
+            <span className="font-semibold text-zinc-300">ITEC Río Cuarto</span>
+            <br />
+            <span>Gestión Académica</span>
+          </div>
+        </div>
+
+        {/* Enlaces de ayuda y archivos */}
+        <div className="text-[11px] border-t border-sitec-line bg-sitec-side">
+          <p
+            title={MUESTRA}
+            className="px-4 py-2 border-b border-sitec-line opacity-50 cursor-not-allowed hover:text-white"
+          >
+            Ayuda
+          </p>
+          <p
+            title={MUESTRA}
+            className="px-4 py-2 opacity-50 cursor-not-allowed hover:text-white"
+          >
+            Descarga de Archivos
+          </p>
         </div>
       </aside>
     </>

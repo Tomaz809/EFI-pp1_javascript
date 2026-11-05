@@ -17,9 +17,15 @@ export default function VerInscripciones() {
 
   return (
     <main>
-      <PageHeader titulo="Ver Inscripciones" subtitulo="Carrera :DESARROLLO DE SOFTWARE _ Inscripciones a cursar">
+      <PageHeader
+        titulo="Ver Inscripciones"
+        subtitulo="Carrera :DESARROLLO DE SOFTWARE _ Inscripciones activas a cursar"
+      >
         {inscriptas.length > 0 && (
-          <button onClick={limpiarCursada} className="text-xs text-zinc-500 hover:text-sitec-rojo cursor-pointer">
+          <button
+            onClick={limpiarCursada}
+            className="text-xs text-zinc-500 hover:text-sitec-rojo font-medium cursor-pointer transition-colors"
+          >
             Dar de baja todas
           </button>
         )}
@@ -27,16 +33,26 @@ export default function VerInscripciones() {
 
       <Panel>
         {inscriptas.length === 0 ? (
-          <p className="text-zinc-600">
-            No tenés inscripciones para este cuatrimestre.{" "}
-            <Link to="/inscripciones/cursar" className="text-sitec-rojo hover:underline">
-              Ir a Inscripciones Para Cursar
+          <div className="py-6 text-center sm:text-left">
+            <p className="text-zinc-600 mb-3">
+              No tenés inscripciones activas para este cuatrimestre.
+            </p>
+            <Link
+              to="/inscripciones/cursar"
+              className="inline-block bg-sitec-barra hover:bg-sitec-rojo text-white px-5 py-2 text-sm font-medium transition-colors"
+            >
+              ➔ Ir a Inscripciones Para Cursar
             </Link>
-          </p>
+          </div>
         ) : (
-          <ul className="flex flex-col gap-4 max-w-xl">
+          <ul className="flex flex-col gap-3.5 max-w-xl">
             {inscriptas.map((materia) => {
-              const { estado, mensaje, aviso } = estadoInscripcion(materia, materias, grafo, condiciones)
+              const { estado, mensaje, aviso } = estadoInscripcion(
+                materia,
+                materias,
+                grafo,
+                condiciones
+              )
               return (
                 <BarraMateria
                   key={materia.id}
@@ -45,7 +61,7 @@ export default function VerInscripciones() {
                   mensaje={mensaje}
                   aviso={aviso}
                   onToggle={toggleCursada}
-                  textoBoton="Dar de baja"
+                  textoBoton="Dar de baja de la cursada"
                 />
               )
             })}
