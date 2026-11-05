@@ -1,8 +1,9 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
+import { Menu, Star, User, LogOut } from "lucide-react"
 import { PlanContext } from "../context/PlanContext"
 
-// Barra superior del SITEC (auténtica, limpia y funcional)
+// Barra superior del SITEC con iconos profesionales de Lucide
 export default function Topbar({ onToggleMenu }) {
   const { favoritas, abrirFavoritos } = useContext(PlanContext)
 
@@ -11,10 +12,10 @@ export default function Topbar({ onToggleMenu }) {
       <div className="flex items-center gap-3 px-3.5">
         <button
           onClick={onToggleMenu}
-          className="lg:hidden w-8 h-8 flex items-center justify-center hover:bg-white/10 cursor-pointer rounded text-base"
+          className="lg:hidden w-8 h-8 flex items-center justify-center hover:bg-white/10 cursor-pointer rounded"
           aria-label="Abrir menú"
         >
-          ☰
+          <Menu className="w-4 h-4 text-zinc-300" />
         </button>
         <Link to="/" className="flex items-center gap-2.5 group">
           <img
@@ -35,6 +36,7 @@ export default function Topbar({ onToggleMenu }) {
           onClick={abrirFavoritos}
           className="px-5 sm:px-7 bg-sitec-rojo hover:bg-sitec-rojo-2 text-[14px] font-medium tracking-wide cursor-pointer flex items-center gap-2 transition-colors border-l border-white/10"
         >
+          <Star className="w-3.5 h-3.5 fill-white text-white" />
           <span>favoritos</span>
           {favoritas.length > 0 && (
             <span className="bg-white/20 text-white text-xs px-1.5 py-0.2 rounded-full font-bold">
@@ -46,11 +48,11 @@ export default function Topbar({ onToggleMenu }) {
         {/* Botones de la cuenta: estilo SITEC real */}
         <div className="hidden sm:flex items-center gap-2 px-3 text-xs border-l border-white/10" title="Solo muestra del SITEC">
           <span className="border border-sky-500/70 text-sky-300 px-3 py-1 rounded flex items-center gap-1.5 select-none bg-sky-950/20">
-            <span className="text-sky-400">👤</span>
+            <User className="w-3.5 h-3.5 text-sky-400" />
             <span>Mi Usuario</span>
           </span>
           <span className="border border-sitec-amarillo/70 text-sitec-amarillo px-3 py-1 rounded flex items-center gap-1.5 select-none bg-amber-950/20">
-            <span>➔</span>
+            <LogOut className="w-3.5 h-3.5 text-sitec-amarillo" />
             <span>Salir</span>
           </span>
         </div>

@@ -1,16 +1,25 @@
 import { createContext, useEffect, useState } from "react"
+import Toast from "../components/Toast"
 
 // Estado global del alumno:
 //  - favoritas: materias prioritarias / objetivos
 //  - cursada: materias en las que se inscribió para cursar este cuatrimestre
 //  - condiciones: condición simulada de cada materia (sin nota / aprobada / desaprobada)
+//  - anioActual: año lectivo activo de cursada
 //  - enfocada: materia seleccionada en "Modo Enfoque" del plan de estudio
 //  - favoritosAbierto: si el panel de favoritos está visible
+//  - toast: sistema de notificaciones no invasivas
 // eslint-disable-next-line react-refresh/only-export-components
 export const PlanContext = createContext()
 
 // Orden en que cambia la condición al tocar el botón de simulación
 const CONDICIONES = ["sin_nota", "aprobada", "desaprobada"]
+
+const ETIQUETAS_CONDICION = {
+  sin_nota: "Sin nota",
+  aprobada: "Aprobada",
+  desaprobada: "Desaprobada",
+}
 
 function cargar(clave, inicial) {
   try {
@@ -40,23 +49,74 @@ export function PlanProvider({ children }) {
   const [anioActual, setAnioActual] = useState(() => cargar("anioActual", 1))
   const [enfocada, setEnfocada] = useState(null)
   const [favoritosAbierto, setFavoritosAbierto] = useState(false)
+  const [toast, setToast] = useState(null)
 
   useEffect(() => guardar("favoritas", favoritas), [favoritas])
   useEffect(() => guardar("cursada", cursada), [cursada])
   useEffect(() => guardar("condiciones", condiciones), [condiciones])
   useEffect(() => guardar("anioActual", anioActual), [anioActual])
 
-  const toggleFavorita = (id) => setFavoritas((prev) => alternar(prev, id))
-  const toggleCursada = (id) => setCursada((prev) => alternar(prev, id))
-  const limpiarCursada = () => setCursada([])
+  const mostrarToast = (mensaje, tipo = "info") => {
+    setToast({ id: Date.now(), mensaje, tipo })
+  }
+
+  useEffect(() => {
+    if (!toast) return
+    const timer = setTimeout(() => setToast(null), 3500)
+    return () => clearTimeout(timer)
+  }, [toast])
+
+  const toggleFavorita = (id, nombre) => {
+    setFavoritas((prev) => {
+      const yaExiste = prev.includes(id)
+      const nueva = alternar(prev, id)
+      if (nombre) {
+        mostrarToast(
+          !yaExiste
+            ? `★ "${nombre}" marcada como prioritaria`
+            : `Removida de prioritarias: "${nombre}"`,
+          !yaExiste ? "star" : "info"
+        )
+      }
+      return nueva
+    })
+  }
+
+  const toggleCursada = (id, nombre) => {
+    setCursada((prev) => {
+      const yaInscripta = prev.includes(id)
+      const nueva = alternar(prev, id)
+      if (nombre) {
+        mostrarToast(
+          !yaInscripta
+            ? `✓ Inscripción confirmada: "${nombre}"`
+            : `Baja de inscripción: "${nombre}"`,
+          !yaInscripta ? "ok" : "warn"
+        )
+      }
+      return nueva
+    })
+  }
+
+  const limpiarCursada = () => {
+    setCursada([])
+    mostrarToast("Se dieron de baja todas las inscripciones", "info")
+  }
 
   // Botón de simulación: pasa a la siguiente condición
-  const simularCondicion = (id) =>
+  const simularCondicion = (id, nombre) => {
     setCondiciones((prev) => {
       const actual = prev[id] ?? "sin_nota"
       const siguiente = CONDICIONES[(CONDICIONES.indexOf(actual) + 1) % CONDICIONES.length]
+      if (nombre) {
+        mostrarToast(
+          `Condición de "${nombre}": ${ETIQUETAS_CONDICION[siguiente]}`,
+          siguiente === "aprobada" ? "ok" : siguiente === "desaprobada" ? "warn" : "info"
+        )
+      }
       return { ...prev, [id]: siguiente }
     })
+  }
 
   // Si toco la misma materia otra vez, salgo del modo enfoque
   const enfocar = (id) => setEnfocada((prev) => (prev === id ? null : id))
@@ -72,6 +132,7 @@ export function PlanProvider({ children }) {
       return copia
     })
     setEnfocada((prev) => (prev === id ? null : prev))
+    mostrarToast("Materia eliminada del sistema", "warn")
   }
 
   return (
@@ -91,11 +152,13 @@ export function PlanProvider({ children }) {
         enfocar,
         salirDeEnfoque,
         quitarMateria,
+        mostrarToast,
         abrirFavoritos: () => setFavoritosAbierto(true),
         cerrarFavoritos: () => setFavoritosAbierto(false),
       }}
     >
       {children}
+      <Toast toast={toast} onCerrar={() => setToast(null)} />
     </PlanContext.Provider>
   )
 }

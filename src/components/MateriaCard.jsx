@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
+import { Star, ArrowRight } from "lucide-react"
 import { PlanContext } from "../context/PlanContext"
 
 // Colores en Modo Enfoque: bordó = elegida, amarillo = previas, gris = las que destraba
@@ -30,19 +31,17 @@ export default function MateriaCard({ materia, estado = "normal", previas = [] }
           <p className="text-[16px] leading-snug font-medium">{materia.nombre_materia}</p>
           <button
             onClick={() => toggleFavorita(materia.id)}
-            className={`text-2xl leading-none cursor-pointer transition-transform hover:scale-110 ${
-              esFavorita
-                ? claro
-                  ? "text-amber-600 font-bold"
-                  : "text-amber-400 font-bold"
-                : claro
-                  ? "text-zinc-400/60"
-                  : "text-zinc-500 hover:text-zinc-300"
-            }`}
+            className="cursor-pointer transition-transform hover:scale-110"
             aria-label={esFavorita ? "Quitar de favoritos" : "Agregar a favoritos"}
             title={esFavorita ? "Materia prioritaria (marcada)" : "Marcar como prioritaria"}
           >
-            ★
+            <Star
+              className={`w-5 h-5 transition-colors ${
+                esFavorita
+                  ? "fill-amber-400 text-amber-400"
+                  : "text-zinc-500 hover:text-zinc-300 fill-transparent"
+              }`}
+            />
           </button>
         </div>
         <p className={`text-xs mt-1 ${textoSecundario}`}>
@@ -68,8 +67,9 @@ export default function MateriaCard({ materia, estado = "normal", previas = [] }
           />
           Ver correlativas
         </label>
-        <Link to={`/materia/${materia.id}`} className="hover:underline font-medium">
-          Detalle ➔
+        <Link to={`/materia/${materia.id}`} className="hover:underline font-medium flex items-center gap-1">
+          <span>Detalle</span>
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </article>

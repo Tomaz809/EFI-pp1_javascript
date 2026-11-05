@@ -1,12 +1,22 @@
 import { NavLink, useLocation } from "react-router-dom"
+import {
+  FileText,
+  UserCheck,
+  Layers,
+  Award,
+  Building,
+  ChevronDown,
+  ChevronRight,
+  HelpCircle,
+  DownloadCloud,
+} from "lucide-react"
 
-// Menú lateral del SITEC (ITEC Río Cuarto)
-// Mantiene las rutas y lógica del proyecto, refinando la estética para que coincida con los bocetos oficiales.
+// Menú lateral del SITEC (ITEC Río Cuarto) con iconos modernos de Lucide
 const MENU = [
-  { titulo: "Mis Datos", icono: "▤", muestra: true },
+  { titulo: "Mis Datos", Icono: FileText, muestra: true },
   {
     titulo: "Inscripciones",
-    icono: "👤",
+    Icono: UserCheck,
     base: "/inscripciones",
     items: [
       { texto: "Cursar", to: "/inscripciones/cursar" },
@@ -16,7 +26,7 @@ const MENU = [
   },
   {
     titulo: "Estado Cursada",
-    icono: "⬡",
+    Icono: Layers,
     base: ["/estado-cursada", "/materias", "/materia", "/agregar"],
     items: [
       { texto: "Condición", to: "/estado-cursada" },
@@ -24,8 +34,8 @@ const MENU = [
       { texto: "Cargar plan", to: "/agregar" },
     ],
   },
-  { titulo: "LLamado a Examen", icono: "▤", muestra: true },
-  { titulo: "Institucional", icono: "▤", muestra: true },
+  { titulo: "LLamado a Examen", Icono: Award, muestra: true },
+  { titulo: "Institucional", Icono: Building, muestra: true },
 ]
 
 const MUESTRA = "Solo muestra del SITEC: no forma parte de este módulo"
@@ -80,6 +90,8 @@ export default function Sidebar({ abierto, onCerrar }) {
         {/* Navegación lateral */}
         <nav className="flex-1 text-[13px]" onClick={onCerrar}>
           {MENU.map((grupo) => {
+            const IconoGrupo = grupo.Icono
+
             if (grupo.muestra) {
               return (
                 <div
@@ -88,10 +100,10 @@ export default function Sidebar({ abierto, onCerrar }) {
                   className="flex items-center justify-between px-3.5 py-2.5 bg-sitec-item border-b border-sitec-line opacity-60 cursor-not-allowed hover:bg-sitec-item/80"
                 >
                   <span className="flex items-center gap-2.5">
-                    <span className="w-4 text-center text-xs opacity-75">{grupo.icono}</span>
+                    <IconoGrupo className="w-3.5 h-3.5 opacity-75 shrink-0" />
                     <span className="text-[12px]">{grupo.titulo}</span>
                   </span>
-                  <span className="text-[10px] text-zinc-400">▾</span>
+                  <ChevronDown className="w-3 h-3 text-zinc-400 opacity-60" />
                 </div>
               )
             }
@@ -104,10 +116,14 @@ export default function Sidebar({ abierto, onCerrar }) {
                     ${activo ? "bg-sitec-rojo font-medium" : "bg-sitec-item"}`}
                 >
                   <span className="flex items-center gap-2.5">
-                    <span className="w-4 text-center text-xs">{grupo.icono}</span>
+                    <IconoGrupo className="w-3.5 h-3.5 shrink-0 text-zinc-200" />
                     <span className="text-[12px]">{grupo.titulo}</span>
                   </span>
-                  <span className="text-[10px] text-zinc-300">{activo ? "▾" : "▸"}</span>
+                  {activo ? (
+                    <ChevronDown className="w-3.5 h-3.5 text-zinc-200" />
+                  ) : (
+                    <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                  )}
                 </div>
                 <div className="bg-sitec-sub">
                   {grupo.items.map((item) =>
@@ -152,15 +168,17 @@ export default function Sidebar({ abierto, onCerrar }) {
         <div className="text-[11px] border-t border-sitec-line bg-sitec-side">
           <p
             title={MUESTRA}
-            className="px-4 py-2 border-b border-sitec-line opacity-50 cursor-not-allowed hover:text-white"
+            className="px-4 py-2 border-b border-sitec-line opacity-50 cursor-not-allowed hover:text-white flex items-center gap-2"
           >
-            Ayuda
+            <HelpCircle className="w-3 h-3 text-zinc-400" />
+            <span>Ayuda</span>
           </p>
           <p
             title={MUESTRA}
-            className="px-4 py-2 opacity-50 cursor-not-allowed hover:text-white"
+            className="px-4 py-2 opacity-50 cursor-not-allowed hover:text-white flex items-center gap-2"
           >
-            Descarga de Archivos
+            <DownloadCloud className="w-3 h-3 text-zinc-400" />
+            <span>Descarga de Archivos</span>
           </p>
         </div>
       </aside>

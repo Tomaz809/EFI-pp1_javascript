@@ -1,5 +1,6 @@
 import { useContext, useMemo, useState } from "react"
 import { useOutletContext } from "react-router-dom"
+import { Palette, Check } from "lucide-react"
 import BarraMateria from "../components/BarraMateria"
 import PageHeader from "../components/PageHeader"
 import Panel from "../components/Panel"
@@ -83,8 +84,9 @@ export default function InscribirCursar() {
 
         {/* LEYENDA DE COLORES */}
         <div className="bg-white border border-zinc-200 p-4 mb-8 shadow-2xs">
-          <p className="text-[11px] font-bold text-zinc-600 uppercase tracking-wider mb-3 flex items-center gap-2">
-            <span>🎨 Leyenda de colores del mapa curricular</span>
+          <p className="text-[11px] font-bold text-zinc-600 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <Palette className="w-3.5 h-3.5 text-zinc-500" />
+            <span>Leyenda de colores del mapa curricular</span>
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 text-xs">
             <div className="flex items-center gap-2">
@@ -165,8 +167,9 @@ export default function InscribirCursar() {
                       Cursar {anio}°
                     </button>
                   ) : (
-                    <span className="text-xs font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded text-white">
-                      Activo ✓
+                    <span className="text-xs font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded text-white flex items-center gap-1">
+                      <span>Activo</span>
+                      <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                   )}
                 </div>
